@@ -21,46 +21,38 @@
 
 import random
 
-def get_numbers_ticket(min_num: int, max_num: int, quantity: int) -> list:
-    """Generates a sorted list of unique random numbers within a given range."""
-    if quantity > (max_num - min_num + 1):  
-        return []
-    
-    if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
-        return []
-    
-    chosen_numbers = set()  # Use a set to avoid duplicates
-
-    
-
-    while len(chosen_numbers) < quantity:
-        chosen_numbers.add(random.randint(min_num, max_num))
-
-    return sorted(chosen_numbers)  # Return sorted list
-
-# User input with exception handling
-try:
-    min_number = int(input("Please enter first number of range: ")) 
-    max_number = int(input("Please enter last number of range: "))
-    quantity_of_numbers = int(input("Please enter amount of returned numbers: "))
-    
-    # Ensure number are in range from 1 to 1000
-    
-    if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
-        raise ValueError("Number must be in range from 0 to 1000")
-
-    # Ensure valid range
-    elif min_number > max_number:
-        raise ValueError("First number must be smaller than or equal to last number.")
-    
-    elif not (min_number <= quantity_of_numbers <= (max_number - min_number + 1)):
-        raise ValueError("Amount of returned number is greater then range")
-    else:
-        # Generate and print lottery numbers
-        lottery_numbers = get_numbers_ticket(min_number, max_number, quantity_of_numbers)
+def lottery_program(min_number = None, max_number = None, quantity_of_numbers = None) -> str:
+    """
+    Generates a sorted list of unique random numbers within a given range, ensuring user input is valid.
+    """
+    try:
+        min_number = int(input("Please enter first number of range: "))
+        max_number = int(input("Please enter last number of range: "))
+        quantity_of_numbers = int(input("Please enter amount of returned numbers: "))
+        
+        # Validate input range
+        if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
+            raise ValueError("Numbers must be in range from 1 to 1000")
+        
+        # Ensure valid range
+        if min_number > max_number:
+            raise ValueError("First number must be smaller than last number.")
+        
+        if quantity_of_numbers > (max_number - min_number + 1):
+            raise ValueError("Amount of returned numbers is greater than the range.")
+        
+        # Generate unique random numbers
+        chosen_numbers = set()
+        while len(chosen_numbers) < quantity_of_numbers:
+            chosen_numbers.add(random.randint(min_number, max_number))
+        
+        lottery_numbers = sorted(chosen_numbers)
         print(f"Your lottery numbers: {lottery_numbers}")
+        
+    except ValueError as e:
+        lottery_numbers = []
+        print(f"Your lottery numbers: {lottery_numbers}")
+        print(f"Error: {e}. Please enter valid numbers.")
 
-except ValueError as e:
-    lottery_numbers = []
-    print(f"Your lottery numbers: {lottery_numbers}")
-    print(f"Error: {e}. Please enter valid numbers.")  # Example: Lottery numbers
+# Run the function
+lottery_program()
