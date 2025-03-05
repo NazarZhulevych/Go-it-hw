@@ -24,9 +24,14 @@ import random
 def get_numbers_ticket(min_num: int, max_num: int, quantity: int) -> list:
     """Generates a sorted list of unique random numbers within a given range."""
     if quantity > (max_num - min_num + 1):  
-        raise ValueError("Quantity cannot be greater than the range of numbers.")
-
+        return []
+    
+    if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
+        return []
+    
     chosen_numbers = set()  # Use a set to avoid duplicates
+
+    
 
     while len(chosen_numbers) < quantity:
         chosen_numbers.add(random.randint(min_num, max_num))
@@ -38,14 +43,24 @@ try:
     min_number = int(input("Please enter first number of range: ")) 
     max_number = int(input("Please enter last number of range: "))
     quantity_of_numbers = int(input("Please enter amount of returned numbers: "))
+    
+    # Ensure number are in range from 1 to 1000
+    
+    if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
+        raise ValueError("Number must be in range from 0 to 1000")
 
     # Ensure valid range
-    if min_number > max_number:
+    elif min_number > max_number:
         raise ValueError("First number must be smaller than or equal to last number.")
-
-    # Generate and print lottery numbers
-    lottery_numbers = get_numbers_ticket(min_number, max_number, quantity_of_numbers)
-    print(f"Your lottery numbers: {lottery_numbers}")
+    
+    elif not (min_number <= quantity_of_numbers <= (max_number - min_number + 1)):
+        raise ValueError("Amount of returned number is greater then range")
+    else:
+        # Generate and print lottery numbers
+        lottery_numbers = get_numbers_ticket(min_number, max_number, quantity_of_numbers)
+        print(f"Your lottery numbers: {lottery_numbers}")
 
 except ValueError as e:
+    lottery_numbers = []
+    print(f"Your lottery numbers: {lottery_numbers}")
     print(f"Error: {e}. Please enter valid numbers.")  # Example: Lottery numbers
