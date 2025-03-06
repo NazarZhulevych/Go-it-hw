@@ -21,14 +21,11 @@
 
 import random
 
-def lottery_program(min_number = None, max_number = None, quantity_of_numbers = None) -> str:
+def get_numbers_ticket(min_number = int, max_number = int, quantity_of_numbers = int) -> str:
     """
     Generates a sorted list of unique random numbers within a given range, ensuring user input is valid.
     """
     try:
-        min_number = int(input("Please enter first number of range: "))
-        max_number = int(input("Please enter last number of range: "))
-        quantity_of_numbers = int(input("Please enter amount of returned numbers: "))
         
         # Validate input range
         if not (1 <= min_number <= 1000 and 1 <= max_number <= 1000 and 1 <= quantity_of_numbers < 1000):
@@ -47,12 +44,18 @@ def lottery_program(min_number = None, max_number = None, quantity_of_numbers = 
             chosen_numbers.add(random.randint(min_number, max_number))
         
         lottery_numbers = sorted(chosen_numbers)
-        print(f"Your lottery numbers: {lottery_numbers}")
+        return lottery_numbers
+        #print(f"Your lottery numbers: {lottery_numbers}")
         
     except ValueError as e:
         lottery_numbers = []
         print(f"Your lottery numbers: {lottery_numbers}")
         print(f"Error: {e}. Please enter valid numbers.")
 
-# Run the function
-lottery_program()
+
+lottery_numbers = get_numbers_ticket(1, 49, 6)
+print("Ваші лотерейні числа:", lottery_numbers)
+
+#min_number = int(input("Please enter first number of range: "))
+#max_number = int(input("Please enter last number of range: "))
+#quantity_of_numbers = int(input("Please enter amount of returned numbers: "))
