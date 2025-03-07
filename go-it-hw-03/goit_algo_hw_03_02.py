@@ -49,11 +49,12 @@ def get_numbers_ticket(min_number = int, max_number = int, quantity_of_numbers =
         
     except ValueError as e:
         lottery_numbers = []
+        return lottery_numbers 
         print(f"Your lottery numbers: {lottery_numbers}")
         print(f"Error: {e}. Please enter valid numbers.")
 
 
-lottery_numbers = get_numbers_ticket(1, 49, 6)
+lottery_numbers = get_numbers_ticket(200, 49, 6)
 print("Ваші лотерейні числа:", lottery_numbers)
 
 #min_number = int(input("Please enter first number of range: "))
