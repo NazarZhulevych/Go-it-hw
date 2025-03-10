@@ -1,23 +1,29 @@
-from datetime import datetime
+import pathlib
 
+def total_salary(path):
+    file_path = pathlib.Path(path)  # Use pathlib.Path instead of PurePath
+    try:
+        with file_path.open("r") as fh:  # Open file safely
+            records = []
+            for line in fh:
+                line = line.strip()  # Remove leading/trailing whitespace
+                if line:  # Ignore empty lines
+                    name, salary = line.split(",")  # Split into name and salary
+                    records.append((name, int(salary)))  # Store as tuple
+            
+            total = sum(salary for _, salary in records)  # Compute total salary
+            number_of_employees = len(records)
 
-def string_to_date(date_string):
-    return datetime.strptime(date_string, "%Y.%m.%d").date()
+            averange_salary = int(total/number_of_employees)
 
+            return total, averange_salary
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' does not exist.")
+    except ValueError:
+        print("Error: Invalid data format in file. Ensure each line follows 'Name,Salary' format.")
+    except FileExistsError:
+        print("File does not exist or unable to open")
+# Use raw string (r"") or double backslashes (\\) for Windows paths
 
-def prepare_user_list(user_data):
-    for user in user_data:  # Iterate through the list of dictionaries
-        if "birthday" in user:  # Ensure the key contains in list
-            user["birthday"] = string_to_date(user["birthday"])  # Replace value of key with updated value
-    return user_data
-
-users = [
-    {"name": "Bill Gates", "birthday": "1955.3.25"},
-    {"name": "Steve Jobs", "birthday": "1955.3.21"},
-    {"name": "Jinny Lee", "birthday": "1956.3.22"},
-    {"name": "John Doe", "birthday": "1985.01.23"},
-    {"name": "Jane Smith", "birthday": "1990.01.27"}
-]
-
-prepared_users = prepare_user_list(users)
-print(prepared_users)
+total, average = total_salary(r"C:\My_repo\First_repo\total_salary.txt")
+print(f"Загальна сума заробітної плати: {total}, Середня заробітна плата: {average}")
